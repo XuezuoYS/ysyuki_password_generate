@@ -25,4 +25,4 @@ def generate_password():
     return password
 
 def run():
-    app.run(debug=False)
+    app.run(debug=True)

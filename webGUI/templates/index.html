@@ -31,8 +31,9 @@
         }
 
         #box {
+            height: auto;
+            width: auto;
             background-color: rgba(0, 0, 0, 0.5);
-            padding: 20px;
             border-radius: 1.5rem;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             padding-left: 1.2rem;
@@ -130,7 +131,7 @@
 
         #resultText {
             height: auto;
-            max-width: 70vh;
+            max-width: 50vh;
             word-wrap: break-word;
             white-space: pre-wrap;
             /* 保留空白符并允许换行 */
@@ -159,8 +160,9 @@
             <div id="result">
                 <p id="resultTitle">结果：</p>
                 <p id="resultText">无</p>
+                <button type="button" id="copy">复制</button>
             </div>
-            <button type="button" id="copy">复制</button>
+            
         </div>
 
     </div>
