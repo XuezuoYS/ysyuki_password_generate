@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>月诗雪-简易的密码生成器</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #6CF;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+        }
+
+        p {
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #box {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 1.5rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding-left: 1.2rem;
+            padding-right: 1.2rem;
+            padding-top: 1rem;
+            padding-bottom: 2rem;
+        }
+
+        #logo {
+            color: #DDD;
+            font-size: 0.9rem;
+            text-align: left;
+            margin-top: 0.35rem;
+            margin-bottom: 0.35rem;
+        }
+
+        #title {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        #forms {
+            display: grid;
+            grid-template-columns: 15rem auto;
+            grid-template-rows: repeat(4, 1fr);
+            grid-gap: 1rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .userInputTitle {
+            text-align: right;
+            align-items: center;
+            justify-self: end;
+            grid-column: 1;
+            color: #EEE;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            text-align: left;
+
+        }
+
+        input {
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            padding: 0.5rem;
+            padding-left: 1REM;
+            border-radius: 1rem;
+            width: 20rem;
+            height: 1.5rem;
+            transition: all 0.5s;
+        }
+
+        input:focus {
+            background-color: rgba(255, 255, 255, 0.9);
+            outline: none;
+        }
+
+        input[type="checkbox"] {
+            width: 1.2rem;
+            height: 1.2rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        button {
+            grid-column: 1 / 3;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            padding: 0.5rem;
+            margin-left: 2rem;
+            margin-right: 2rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all 0.5s;
+            font-size: 1.1rem;
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        #result {
+            font-size: 1.2rem;
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: 5rem auto;
+            grid-template-rows: auto auto;
+            margin: 1rem;
+            max-width: 70vh;
+        }
+
+        #resultText {
+            height: auto;
+            max-width: 70vh;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            /* 保留空白符并允许换行 */
+            overflow-wrap: break-word;
+            /* 确保长内容强制换行 */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div id="box">
+            <p id="logo">YueshiYuki</p>
+            <p id="title">自制简易密码生成器</p>
+            <form id="forms">
+                <label class="userInputTitle">生成的长度</label>
+                <input type="number" name="length" placeholder="生成的位数" value="8">
+                <label class="userInputTitle">特殊字符</label>
+                <input type="text" name="specialChars" placeholder="允许插入的特殊字符，无需空格区分">
+                <label class="userInputTitle">是否加入数字</label>
+                <input type="checkbox" name="includeNumber" placeholder="是否加入数字">
+                <label class="userInputTitle">是否允许数字或特殊字符开头</label>
+                <input type="checkbox" name="allowStartWithSpecial" placeholder="是否允许数字或特殊字符开头">
+                <button type="button" id="generate">生成</button>
+            </form>
+            <div id="result">
+                <p id="resultTitle">结果：</p>
+                <p id="resultText">无</p>
+            </div>
+            <button type="button" id="copy">复制</button>
+        </div>
+
+    </div>
+
+    <p style="position: fixed; color: #777; right: 3rem; bottom: 1rem; cursor: pointer;">Designed by YueshiYuki Service
+    </p>
+
+    <script>
+        function copyToClipboard() {
+            const text = document.getElementById("resultText").innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("复制成功！");
+            });
+        }
+        document.getElementById("copy").addEventListener("click", copyToClipboard);
+
+        function form() {
+            const length = document.forms[0].length.value;
+            const specialChars = document.forms[0].specialChars.value;
+            const includeNumber = document.forms[0].includeNumber.checked;
+            const allowStartWithSpecial = document.forms[0].allowStartWithSpecial.checked;
+
+            return { length, specialChars, includeNumber, allowStartWithSpecial };
+        }
+        document.getElementById("generate").addEventListener("click", () => {
+            const { length, specialChars, includeNumber, allowStartWithSpecial } = form();
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "length": length,
+                    "special_chars": specialChars,
+                    "include_numbers": includeNumber,
+                    "allow_start_with_special": allowStartWithSpecial
+                })
+            })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("resultText").innerText = data;
+                })
+        })
+    </script>
+</body>
+
+</html>
