@@ -1,5 +1,5 @@
 
-import json
+import socket
 from flask import Flask, render_template, request
 
 from src import password_generate
@@ -24,5 +24,10 @@ def generate_password():
 
     return password
 
-def run():
-    app.run(debug=True)
+def find_free_port():
+    s = socket.socket()
+    s.bind(('', 0))
+    return s.getsockname()[1]
+
+def run(port):
+    app.run(debug=False, port=port)

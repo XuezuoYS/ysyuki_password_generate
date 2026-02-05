@@ -1,1 +1,1 @@
-python -m webGUIrun.py
+python webGUIrun.py
