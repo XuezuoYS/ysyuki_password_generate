@@ -75,32 +75,32 @@ def legitimationPassword(password:str, length:int, special_chars:str = "", inclu
         result = any(char in text for char in judge)
         return result
     
-    def insertCharIntoString(text:str, insert:str, index:int) -> str:
+    def replaceintoString(text:str, replace:str ,index:int) -> str:
         '''
         将字符替换字符串中某一位置
         :param text: 待插入的字符串
         :type text: str
-        :param insert: 插入的字符
-        :type insert: str
+        :param replacei字符
+        :type replacei
         :param index: 插入的位置
         :type index: int
         :return: 插入后的字符串
         :rtype: str
         '''
-        return text[:index] + insert + text[(index + 1):]
+        return text[:index] + replace + text[(index + 1):]
     
     for _ in range(2):
         if not checkIsIn(password, string.ascii_uppercase):
-            password = insertCharIntoString(password, secrets.choice(string.ascii_uppercase), length - 4)
+            password = replaceintoString(password, secrets.choice(string.ascii_uppercase), length - 4)
 
         if not checkIsIn(password, string.ascii_lowercase):
-            password = insertCharIntoString(password, secrets.choice(string.ascii_lowercase), length - 3)
+            password = replaceintoString(password, secrets.choice(string.ascii_lowercase), length - 3)
         
         if include_numbers and not checkIsIn(password, string.digits):
-            password = insertCharIntoString(password, secrets.choice(string.digits), length - 2)
+            password = replaceintoString(password, secrets.choice(string.digits), length - 2)
 
         if special_chars != "" and not checkIsIn(password, special_chars):
-            password = insertCharIntoString(password, secrets.choice(special_chars), length - 1)
+            password = replaceintoString(password, secrets.choice(special_chars), length - 1)
 
     return password
     
