@@ -1,6 +1,7 @@
 
 import socket
 from flask import Flask, render_template, request
+import importlib
 
 from src import password_generate
 
@@ -20,6 +21,7 @@ def generate_password():
     include_numbers = json_data['include_numbers']
     allow_start_with_special = json_data['allow_start_with_special']
 
+    importlib.reload(password_generate)
     password = password_generate.generator(length, special_chars, include_numbers, allow_start_with_special)
 
     return password
