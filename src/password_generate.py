@@ -51,7 +51,7 @@ def generator(length:int = 8, special_chars:str = "", include_numbers:bool = Tru
     # 打乱除首字符外的其他字符顺序，确保安全性
     if length > 1:
         remaining_part = password[1:]
-        random.shuffle(remaining_part)
+        secrets.SystemRandom().shuffle(remaining_part)
         password = [password[0]] + remaining_part
     
     password = legitimationPassword(''.join(password), length, special_chars, include_numbers)
