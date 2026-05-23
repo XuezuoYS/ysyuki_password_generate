@@ -21,8 +21,8 @@ def run():
     numbers_input = input("是否包含数字? (Y/n, 默认Y): ").strip().lower()
     include_numbers = numbers_input != 'n'
     
-    start_input = input("是否允许以数字或特殊字符开头? (Y/n, 默认Y): ").strip().lower()
-    allow_start_with_special = start_input != 'n'
+    start_input = input("是否允许以数字或特殊字符开头? (y/N, 默认N): ").strip().lower()
+    allow_start_with_special = start_input == 'y'
     
     return {
         'length': length,
