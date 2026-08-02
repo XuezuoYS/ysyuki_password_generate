@@ -1,1 +1,1 @@
-python webGUIrun.py
+uv run webGUIrun.py

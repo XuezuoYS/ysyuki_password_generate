@@ -1,1 +1,1 @@
-python src/CLI.py
+uv run src/CLI.py
